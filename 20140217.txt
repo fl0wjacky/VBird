@@ -1,0 +1,30 @@
+netstat -tulp
+netstat -lnp
+service --status-all
+chkconfig --list | more
+chkconfig --list | grep '3:on'
+chkconfig --level 345 atd on
+
+/etc/init.d/httpd status
+chkconfig --list httpd
+chkconfig httpd on; chkconfig --list httpd
+/etc/init.d/httpd status
+/etc/init.d/httpd start
+
+/etc/init.d/rsync status
+netstat -tlup | grep rsync
+chkconfig --list rsync
+chkconfig rsync off; chkconfig --list rsync
+/etc/init.d/xinetd restart; netstat -tlup | grep rsync
+
+ntsysv
+
+vim /etc/init.d/myvbird
+	#!/bin/bash
+	#chkconfig: 35 80 70
+	#description: Nothing! Just for fun.
+	echo "Nothing"
+chkconfig --list myvbird
+chkconfig --add myvbird; chkconfig --list myvbird
+chkconfig --del myvbird
+rm /etc/init.d/myvbird 

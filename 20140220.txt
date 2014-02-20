@@ -1,0 +1,26 @@
+ps aux | grep rsyslog
+chkconfig --list rsyslog
+cat /var/log/secure
+cat /etc/rsyslog.conf
+
+assume commands below are in file /etc/rsyslog.conf, please explain every command's meaning.
+	mail.info	/var/log/maillog
+
+	news.*;cron.*	/var/log/cronnews
+	news.=warn;cron.=warn	/var/log/cronnews.warn
+	
+	*.*;news,cron,mail.none		/var/log/messages
+	*.*;news.none;cron.none;mail.none	/var/log/messages
+
+	kern.*		/dev/console
+	*.info;mail.none;news.none;authpriv.none;cron.none	/var/log/messages
+	authpriv.*	/var/log/secure
+	mail.*		/var/log/maillog
+	cron.*		/var/log/cron
+	*.emerg		*
+	uucp,news.crit		/var/log/spooler
+	local7.*		/var/log/boot.log
+	news.=crit		/var/log/news/news.crit
+	news.=err		/var/log/news/news.err
+	news.notice		/var/log/news/news.notice
+

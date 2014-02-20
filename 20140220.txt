@@ -15,7 +15,7 @@ assume commands below are in file /etc/rsyslog.conf, please explain every comman
 	kern.*		/dev/console
 	*.info;mail.none;news.none;authpriv.none;cron.none	/var/log/messages
 	authpriv.*	/var/log/secure
-	mail.*		/var/log/maillog
+	mail.*		-/var/log/maillog
 	cron.*		/var/log/cron
 	*.emerg		*
 	uucp,news.crit		/var/log/spooler

@@ -24,3 +24,9 @@ assume commands below are in file /etc/rsyslog.conf, please explain every comman
 	news.=err		/var/log/news/news.err
 	news.notice		/var/log/news/news.notice
 
+vim /etc/rsyslog.conf
+	#Add by flow 2014/02/20
+	*.info		/var/log/admin.log
+/etc/init.d/rsyslog restart
+ll /var/log/admin.log
+

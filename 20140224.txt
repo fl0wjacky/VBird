@@ -1,0 +1,25 @@
+chattr +a /var/log/messages
+lsattr /var/log/messages
+vim /var/log/messages
+/etc/ini.d/rsyslog restart
+
+cat /etc/cron.daily/logrotate
+cat /etc/logrotate.conf
+cd /etc/logrotate.d
+cat syslog
+chattr +a /var/log/messages
+vim /etc/logrotate.d/syslog
+	/var/log/messages /var/log/secure /var/log/maillog /var/log/spooler \
+	/var/log/boot.log /var/log/cron {
+		sharescripts
+		prerotate
+			/usr/bin/chattr -a /var/log/messages
+		endscript
+		prerotate
+			/bin/kill -HUP 'cat /var/run/syslog.pid 2> /dev/null'
+2> /dev/null || true
+			/bin/kill -HUP 'cat /var/run/rsyslogd.pid 2>
+/dev/null' 2> /dev/null || true
+		/usr/bin/chattr +a /var/log/message
+		endscript
+}

@@ -1,0 +1,44 @@
+logrotate -v /etc/logrotate.conf
+logrotate -vf /etc/logrotate.conf
+ll /var/log/messages*; lsattr /var/log/messages
+
+vim /etc/rsyslog.conf
+	#add by fl0w 2014/02/26
+	*.info		/var/log/admin.log
+/etc/init.d/rsyslog restart
+ll /var/log/admin.log
+chattr +a /var/log/admin.log
+lsattr /var/log/admin.log
+mv /var/log/admin.log /var/log/admin.log.1
+vi /etc/logrotate.d/admin
+	/var/log/admin.log {
+		monthly
+		size=10M
+		rotate 5
+		sharedscripts
+		prerotate
+			/usr/bin/chattr -a /var/log/admin.log
+		endscript
+		sharedscripts
+		postrotate
+			/usr/bin/killall -HUP rsyslogd
+			/usr/bin/chattr +a /var/log/admin.log
+		endscript
+}
+logrotate -v /etc/logrotate.conf
+logrotate -vf /etc/logrotate.conf
+lsattr /var/log/admin.log*
+
+mkdir /usr/local/virus
+wget http://linux.vbird.org/download/index.php?action=detail&fileid=69
+tar -zxvf logfile-0.1-4-2.tgz -C /usr/local/virus/logfile
+cd /usr/local/virus/logfile
+vi logfile.sh
+	#about 93 line
+	email='root@localhost"
+	basedir='/usr/local/virus/logfile'
+sh logfile.sh
+vi /etc/crontab
+	#Add this line
+	10 0 * * * root /usr/local/virus/logfile/logfile.sh
+mail

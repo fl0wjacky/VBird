@@ -15,11 +15,12 @@ vim /etc/logrotate.d/syslog
 		prerotate
 			/usr/bin/chattr -a /var/log/messages
 		endscript
-		prerotate
+		sharescripts
+		postrotate
 			/bin/kill -HUP 'cat /var/run/syslog.pid 2> /dev/null'
 2> /dev/null || true
 			/bin/kill -HUP 'cat /var/run/rsyslogd.pid 2>
 /dev/null' 2> /dev/null || true
-		/usr/bin/chattr +a /var/log/message
+			/usr/bin/chattr +a /var/log/message
 		endscript
 }
